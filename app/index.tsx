@@ -28,11 +28,13 @@ export default function App() {
   )
 
   async function handleGithubOAuthCode(code: string) {
+
     const response = await api.post('/register', {
       code,
     })
 
     const { token } = response.data
+
 
     await SecureStore.setItemAsync('token', token)
 
@@ -40,6 +42,7 @@ export default function App() {
   }
 
   useEffect(() => {
+    // console.log(makeRedirectUri({ scheme: 'nlwspacetime' }))
     if (response?.type === 'success') {
       const { code } = response.params
 

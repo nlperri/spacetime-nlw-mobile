@@ -35,16 +35,18 @@ export default function NewMemories() {
         setPreview(result.assets[0].uri)
       }
     } catch (err) {
-      console.log(err)
+
     }
   }
 
   async function handleCreateMemory() {
+
     const token = await SecureStore.getItemAsync('token')
 
     let coverUrl = ''
 
     if (preview) {
+
       const uploadFormData = new FormData()
 
       uploadFormData.append('file', {
@@ -52,16 +54,21 @@ export default function NewMemories() {
         name: 'image.jpg',
         type: 'image/jpeg',
       } as any)
-      const uploadResponse = await api.post('upload', uploadFormData, {
+
+
+      const uploadResponse = await api.post('/upload', uploadFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
 
+      console.log(uploadResponse.data)
+
       coverUrl = uploadResponse.data.fileUrl
     }
 
-    await api.post(
+
+    const response = await api.post(
       '/memories',
       {
         content,
